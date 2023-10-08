@@ -1,16 +1,5 @@
 import { data } from "./cats_and_dogs.js";
 
-const catsAndDogs = Object.entries(data)
-    .reduce((acc, [id, value]) => [...acc, { ...value, id }], [])
-    .sort((a1, a2) => (a1.likes > a2.likes ? -1 : 1));
-
-const result = {
-    top: catsAndDogs.slice(0, 5).sort((a1, a2) => (a1.width * a1.height > a2.height * a2.width ? -1 : 1)),
-    rest: catsAndDogs.slice(5).sort((a1, a2) => (a1.width * a1.height > a2.height * a2.width ? -1 : 1)),
-};
-
-console.log(result);
-
 // Решение
 const catsAndDogs = Object.entries(data)
   .reduce((acc, [id, value]) => [...acc, { ...value, id }], [])
@@ -22,20 +11,23 @@ const result = {
   rest: catsAndDogs.slice(5),
 };
 
-const animalWrapper = (entity) => `<li>
-<button class="imageWrapper" aria-expanded="false">
-  <img src="${entity.filename}" alt="" />
-</button>
-</li>`;
+const animalWrapper = (entity) =>
+    `
+        <li>
+            <div>
+                <img src="${entity.filename}" alt="" />
+            </div>
+        </li>
+`;
 
 const createTemplate = (result) => `
 <section>
-<h2>Популярные животные</h2>
-<ul class="animals top">${result.top.map(animalWrapper).join("\n")}</ul>
+<h2>Самые популярные зверушки</h2>
+<ul class="animals-top">${result.top.map(animalWrapper).join("\n")}</ul>
 </section>
 <section>
-<h2>Остальные</h2>
-<ul class="animals rest">${result.rest.map(animalWrapper).join("\n")}</ul>
+<h2>Просто симпатичные зверушки</h2>
+<ul class="animals-rest">${result.rest.map(animalWrapper).join("\n")}</ul>
 </section>
 `;
 
